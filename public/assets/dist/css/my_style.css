@@ -1,0 +1,304 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;1,500&display=swap');
+  .form-group {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  h1, h2, h3, h4, h5{
+    font-family: 'Arial', sans-serif;
+    font-weight: 700;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 10px 10px 10px 5px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid #757575;
+    font-size: 16px;
+    background-color: #f0f0f0;
+    /* Kotak abu-abu */
+  }
+  .form-group textarea {
+    width: 100%;
+    padding: 10px 10px 10px 5px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid #757575;
+    font-size: 16px;
+    background-color: #f0f0f0;
+    /* Kotak abu-abu */
+  }
+  .form-group select {
+    width: 100%;
+    padding: 10px 10px 10px 5px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid #757575;
+    font-size: 16px;
+    background-color: #f0f0f0;
+    /* Kotak abu-abu */
+  }
+
+  .form-group input:focus {
+    outline: none;
+    border-bottom: 2px solid #007bff;
+    /* border: 1px solid #007bff; */
+    /* Border saat fokus */
+    background-color: #fff;
+    /* Warna kotak saat fokus */
+  }
+  .form-group select:focus {
+    outline: none;
+    border-bottom: 2px solid #007bff;
+    /* border: 1px solid #007bff; */
+    /* Border saat fokus */
+    background-color: #fff;
+    /* Warna kotak saat fokus */
+  }
+  .form-group textarea:focus {
+    outline: none;
+    border-bottom: 2px solid #007bff;
+    /* border: 1px solid #007bff; */
+    /* Border saat fokus */
+    background-color: #fff;
+    /* Warna kotak saat fokus */
+  }
+
+  .form-group label {
+    color: #999;
+    font-size: 16px;
+    position: absolute;
+    pointer-events: none;
+    left: 13px;
+    top: 10px;
+    transition: 0.2s ease all;
+  }
+
+  .form-group input:focus~label,
+  .form-group input:valid~label {
+    top: -20px;
+    font-size: 12px;
+    color: #007bff;
+  }
+  .form-group textarea:focus~label,
+  .form-group textarea:valid~label {
+    top: -20px;
+    font-size: 12px;
+    color: #007bff;
+  }
+  .form-group select:focus~label,
+  .form-group select:valid~label {
+    top: -20px;
+    font-size: 12px;
+    color: #007bff;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .col {
+    width: 48%;
+  }
+  .btnyou::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: -1;
+    transition: transform 0.5s;
+    transform-origin: 0 0;
+    transition-timing-function: cubic-bezier(0.5,1.6,0.4,0.7);
+  }
+
+  .button-primary {
+    align-items: center;
+    appearance: none;
+    /* background-color: rgba(12, 56, 179, 1.0);  */
+    border-radius: 12px;
+    border: 2px solid rgba(12, 56, 179, 1.0);
+    box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px, rgba(0, 0, 0, .14) 0 6px 10px 0, rgba(0, 0, 0, .12) 0 1px 18px 0;
+    box-sizing: border-box;
+    color: rgba(12, 56, 179, 1.0); 
+    cursor: pointer;
+    display: inline-flex;
+    fill: currentcolor;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-style: normal;
+    height: 45px;
+    justify-content: center;
+    letter-spacing: .50px;
+    line-height: normal;
+    max-width: 100%;
+    overflow: visible;
+    padding: 2px 24px;
+    position: relative;
+    text-align: center;
+    text-transform: none;
+    transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1), opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 100%;
+    will-change: transform, opacity;
+    z-index: 0;
+    transition: all 0.2s ease 0s;
+    background-color: none; 
+    background-image: linear-gradient(to right, rgba(0, 40, 115, 0.9) 50%, transparent 50%);
+    background-size: 200% 100%; /* Ukuran latar belakang dua kali lebar tombol */
+    background-position: right bottom; /* Memulai dari kanan */
+  }
+  
+  .button-primary:hover {
+    background-color: rgba(0, 40, 115, 0.9); 
+    color: rgba(0, 0, 0, 1.0); 
+    transition: background-position 0.5s ease; /* Transisi untuk latar belakang */
+  }
+
+  .button-primary:active {
+    background-color: rgba(0, 30, 110, 1.0); /* lebih gelap lagi saat aktif */
+    box-shadow: 0 4px 4px 0 rgba(60, 64, 67, 0.3), 0 8px 12px 6px rgba(60, 64, 67, 0.15);
+    outline: none;
+  }
+  
+  /* .button-primary:active {
+    background-color: rgba(10, 50, 160, 0.8); 
+    box-shadow: 0 4px 4px 0 rgba(60, 64, 67, 0.3), 0 8px 12px 6px rgba(60, 64, 67, 0.15);
+    outline: none;
+  }
+  
+  .button-primary:focus {
+    background-color: rgba(12, 56, 179, 0.6); 
+    outline: none;
+    border: 2px solid rgba(8, 7, 7, 1.0); 
+  }
+  
+  .button-primary:not(:disabled) {
+    box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0, rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+  }
+  
+  .button-primary:not(:disabled):hover {
+    box-shadow: rgba(60, 64, 67, 0.3) 0 2px 3px 0, rgba(60, 64, 67, 0.15) 0 6px 10px 4px;
+  }
+  
+  .button-primary:not(:disabled):focus {
+    box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0, rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+  }
+  
+  .button-primary:not(:disabled):active {
+    box-shadow: rgba(60, 64, 67, 0.3) 0 4px 4px 0, rgba(60, 64, 67, 0.15) 0 8px 12px 6px;
+  }
+  
+  .button-primary:disabled {
+    background-color: rgba(200, 200, 200, 0.5); 
+    color: rgba(150, 150, 150, 0.5); 
+    box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0, rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+  } */
+  
+  
+
+.button-32 {
+  background-color: #fff000;
+  border-radius: 50px;
+  color: #000;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 4px 9px;
+  text-align: center;
+  transition: 200ms;
+  width: 100px; /* Ukuran tetap dalam piksel */
+  height: auto; /* Biarkan tinggi menyesuaikan secara otomatis */
+  box-sizing: border-box;
+  border: 0;
+  font-size: 12px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-32:not(:disabled):hover,
+.button-32:not(:disabled):focus {
+  outline: 0;
+  background: #f4e603;
+  box-shadow: 0 0 0 2px rgba(0,0,0,.2), 0 3px 8px 0 rgba(0,0,0,.15);
+}
+
+.button-32:disabled {
+  filter: saturate(0.2) opacity(0.5);
+  -webkit-filter: saturate(0.2) opacity(0.5);
+  cursor: not-allowed;
+}
+
+.loading-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.9); /* Latar belakang semi-transparan */
+  display: flex;
+  flex-direction: column; /* Mengatur flex-direction menjadi kolom */
+  align-items: center; /* Pusatkan secara horizontal */
+  justify-content: center; /* Pusatkan secara vertikal */
+  z-index: 9999; /* Pastikan di atas konten lain */
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 6px solid rgba(0, 123, 255, 0.3);
+  border-top-color: rgba(0, 123, 255, 1.0);
+  border-radius: 50%;
+  animation: spin 1s ease-in-out infinite;
+}
+
+/* Animasi putar */
+@keyframes spin {
+  to { transform: rotate(360deg); } 
+}
+
+@keyframes spin {
+  from {
+      transform: rotate(0deg);
+  }
+  to {
+      transform: rotate(360deg);
+  }
+}
+/* @keyframes dots {
+  0% { content: ""; }
+  33% { content: "."; }
+  66% { content: ".."; }
+  100% { content: "..."; }
+} */
+
+.loading-text {
+  font-size: 18px; /* Ukuran font */
+  color: #333; /* Warna teks */
+  margin-top: 10px; /* Jarak antara spinner dan teks */
+  font-weight: bold; /* Berat font */
+}
+
+#dots::after {
+  content: "";
+  animation: dots 1.5s steps(1, end) infinite;
+}
+
+@import url("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css");
+
+.fade-scale {
+  transform: scale(0);
+  opacity: 0;
+  transition: all .25s linear; /* Transisi untuk semua properti */
+}
+
+.fade-scale.in {
+  opacity: 1;
+  transform: scale(1); /* Skala kembali ke ukuran normal */
+}
