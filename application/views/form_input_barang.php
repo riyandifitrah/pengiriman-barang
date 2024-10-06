@@ -51,7 +51,6 @@
                                         <label for="deskripsi-barang">Deskripsi barang</label>
                                     </div>
                                 </div>
-                                <p>tes</p>
                                 <div class="row mt-3">
                                     <div class="form-group col col-lg-6">
                                         <select id="status-barang" class="form-control" required>
