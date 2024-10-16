@@ -48,7 +48,10 @@ class Any_model extends MY_Model
 	}
 	public function update_status($id)
 	{
+		// Mengatur zona waktu ke Asia/Jakarta
+		date_default_timezone_set('Asia/Jakarta');
 		$this->db->set('status', 2);
+		$this->db->set('updated_at', date('Y-m-d H:i:s'));
 		$this->db->where('id_barang', $id);
 		return $this->db->update('form_pengiriman');
 	}

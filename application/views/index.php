@@ -63,8 +63,8 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+      <div class="modal-header mb-2 bg-info" >
+        <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-diagram-next"></i>&nbsp;Data Unit</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -109,8 +109,7 @@
 <script>
 $(document).ready(function() {
   $(document).on('click', '#btn-update', function(e) {
-    e.preventDefault(); // Mencegah aksi default tombol
-    // Mengambil ID barang dari atribut data-id
+    e.preventDefault(); 
     var id_barang = $(this).data('id');
     console.log(id_barang);
     Swal.fire({
@@ -125,7 +124,7 @@ $(document).ready(function() {
     }).then((isConfirmed) => {
       if (isConfirmed) {
         $.ajax({
-          url: '<?= site_url('update-pengiriman') ?>', // Ganti 'your_controller' dengan nama controller yang sesuai
+          url: '<?= site_url('update-pengiriman') ?>', 
           type: 'POST',
           dataType: 'json',
           data: {
@@ -140,7 +139,7 @@ $(document).ready(function() {
                         'Data telah berhasil diupdate.',
                         'success'
                     ).then(() => {
-                        location.reload(); // Refresh halaman setelah konfirmasi
+                        location.reload();
                     });
             } else {
                     Swal.fire(
@@ -163,7 +162,7 @@ $(document).ready(function() {
 <script>
   $(document).ready(function() {
     $(document).on('click', '#btn-view', function(e) {
-      e.preventDefault(); // Mencegah aksi default tombol
+      e.preventDefault(); 
       var id_barang = $(this).data('id');
       $.ajax({
         url: '<?= site_url('fetch-pengiriman') ?>',
@@ -173,11 +172,12 @@ $(document).ready(function() {
           id_barang: id_barang
         },
         success: function(response) {
+          console.log(response);
           $('#id-barang').val(response.id_barang);
           $('#bill-landing').val(response.bill);
           $('#deskripsi-barang').val(response.deskripsi);
 
-          // Tampilkan modal setelah data diambil
+          
           $('#exampleModal').modal('show');
         },
         error: function(xhr, status, error) {
@@ -189,17 +189,9 @@ $(document).ready(function() {
 </script>
 <script>
   $(document).ready(function() {
-    // Event listener untuk tombol view
     $(document).on('click', '#btn-x', function(e) {
-      e.preventDefault(); // Mencegah aksi default tombol
-      // var id_barang = $(this).data('id');
-
-      // Tampilkan alert
+      e.preventDefault(); 
       alert('Unknown');
-
-      // Kamu bisa menambahkan kode lain di sini, misalnya mengambil data melalui AJAX
-
-      // Tampilkan modal setelah alert
       $('#exampleModal').modal('show');
     });
   });
@@ -208,41 +200,40 @@ $(document).ready(function() {
 
 <!-- <script>
   $(document).ready(function() {
-    // Event listener untuk tombol view
     $(document).on('click', '#btn-view', function(e) {
-      e.preventDefault(); // Mencegah aksi default tombol
-      var id_barang = $(this).data('id'); // Mengambil nilai dari atribut data-id
-      console.log(id_barang); // Cek apakah id_barang berhasil diambil
-      $('#id-barang').text(id_barang); // Menampilkan id_barang di dalam modal
-      $('#exampleModal').modal('show'); // Menampilkan modal
+      e.preventDefault(); 
+      var id_barang = $(this).data('id'); 
+      console.log(id_barang); 
+      $('#id-barang').text(id_barang); 
+      $('#exampleModal').modal('show'); 
     });
   });
 </script> -->
 
 <script>
   window.addEventListener('load', function() {
-    const card = document.getElementById('myCard'); // Pastikan ini sesuai dengan ID card
-    card.classList.add('in'); // Menambahkan class 'in' untuk memicu animasi
+    const card = document.getElementById('myCard'); 
+    card.classList.add('in');
   });
 </script>
 <script>
   $(document).ready(function() {
-    // Inisialisasi DataTable
+    
     $('#myTable').DataTable({
-      processing: true, // Memproses data di server
-      serverSide: true, // Aktifkan server-side processing
-      paging: true, // Aktifkan pagination
-      lengthChange: true, // Pilihan jumlah data per halaman
-      searching: true, // Aktifkan fitur pencarian
-      ordering: true, // Aktifkan pengurutan kolom
-      info: true, // Tampilkan info tabel (jumlah data, halaman, dll.)
-      autoWidth: false, // Atur lebar kolom otomatis
-      responsive: true, // Agar tabel responsif di berbagai ukuran layar
-      pageLength: 2,
-      lengthMenu: [2, 4, 10, 20, 50, 100, 200, 500],
+      processing: true, 
+      serverSide: true, 
+      paging: true, 
+      lengthChange: true, 
+      searching: true, 
+      ordering: true, 
+      info: true, 
+      autoWidth: false, 
+      responsive: true, 
+      pageLength: 10,
+      lengthMenu: [10, 15, 20, 35, 50, 100, 200, 500],
       ajax: {
-        url: "<?= base_url('get-pengiriman') ?>", // Ganti dengan URL controller CodeIgniter Anda
-        type: "GET" // Gunakan metode GET untuk mengirim data
+        url: "<?= base_url('get-pengiriman') ?>", 
+        type: "GET" 
       },
       columns: [{
           data: "no"

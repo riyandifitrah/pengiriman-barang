@@ -40,7 +40,8 @@ class JqueryController extends CI_Controller
 			'status' => $status_barang,
 			'port' => $port,
 			'tgl' => $tanggal_barang,
-			'waktu' => $waktu_barang
+			'waktu' => $waktu_barang,
+			'created_at' => date('Y-m-d H:i:s')
 		];
 
 		// Simpan ke database
@@ -108,7 +109,7 @@ class JqueryController extends CI_Controller
 				<i class="fa-solid fa-truck-fast"></i>
 			</button>';
 			} else if ($v->status == 2) {
-				$button .= '<button type="submit" class="button-dataTable btn-color-3" id="btn-update" data-id="' . $v->id_barang . '">
+				$button .= '<button type="submit" class="button-dataTable btn-color-3" id="btn-update-arrive" data-id="' . $v->id_barang . '">
 				<i class="fa-solid fa-ship"></i>
 			</button>';
 			} else {
@@ -145,7 +146,7 @@ class JqueryController extends CI_Controller
 	}
 	public function fetch_pengiriman()
 	{
-		$id_barang = $this->input->post('id_barang');
+		$id_barang = $this->input->get('id_barang');
 		$data_barang = $this->any_model->fetch_id($id_barang);
 
 		if ($data_barang) {
