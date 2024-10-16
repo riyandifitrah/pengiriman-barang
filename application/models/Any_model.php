@@ -7,26 +7,49 @@ class Any_model extends MY_Model
 	{
 		// load library database
 		parent::__construct();
-        $this->load->model('User_model', 'us_model');
+		$this->load->model('User_model', 'us_model');
 	}
 
-	public function generate_nomor_bill() {
+	public function generate_nomor_bill()
+	{
 		$today = date('Ymd');
-        $this->db->like('bill', $today, 'after'); 
-        $this->db->order_by('bill', 'DESC'); 
-        $last_bill = $this->db->get('form_pengiriman')->row();
-        return $last_bill;
-
-    }
-	public function generate_id_barang() {
+		$this->db->like('bill', $today, 'after');
+		$this->db->order_by('bill', 'DESC');
+		$last_bill = $this->db->get('form_pengiriman')->row();
+		return $last_bill;
+	}
+	public function generate_id_barang()
+	{
 		$id_barang = str_pad(mt_rand(0, 99999999), 8, '0', STR_PAD_LEFT);
 		return $id_barang;
 	}
-	
-	public function insert_form_pengiriman($data){
+
+	public function insert_form_pengiriman($data)
+	{
 		$this->db->insert('form_pengiriman', $data);
 		return $this->db->affected_rows() != 1 ? false : true;
 	}
-
-
+	public function get_form_pengiriman()
+	{
+		$query = $this->db->select('*')->from('form_pengiriman');
+		return $query ? $query : [];
+	}
+	public function fetch_id($id)
+	{
+		$fetch_query = $this->db->select('*')
+			->from('form_pengiriman')
+			->where('id_barang', $id)
+			->get();
+		if ($fetch_query->num_rows() > 0) {
+			return $fetch_query->row_array();
+		} else {
+			return null;
+		}
+	}
+	public function update_status($id)
+	{
+		$this->db->set('status', 2);
+		$this->db->where('id_barang', $id);
+		return $this->db->update('form_pengiriman');
+	}
 }

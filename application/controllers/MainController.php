@@ -31,9 +31,10 @@ class MainController extends CI_Controller
 			'content' => 'Data Barang',
 			'csrf' => $this->csrf,
 		);
+		
 		$this->load->view('layouts/wrapper_top.php', ['parse' => $parse]);
 		$this->load->view('layouts/sidebar.php', ['parse' => $parse]);
-		$this->load->view('index');
+		$this->load->view('index', $parse);
 	}
 	public function form_input_barang()
 	{

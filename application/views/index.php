@@ -23,17 +23,32 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-12">
-          <div class="card shadow">
+          <div id="myCard" class="card shadow fade-scale">
             <div class="card-header border-0" style="background-color: rgba(0, 20, 80, 0.9); backdrop-filter: blur(8px);">
               <div class="d-flex justify-content-between">
-                <h3 class="card-title text-white">Beranda</h3>
-                <a class="button-32" href="javascript:void(0);">Tambah data&nbsp;<i class="fas fa-plus fa-sm"></i></a>
+                <h3 class="card-title text-white">Data Pengiriman</h3>
+                <a class="button-32" href="<?= site_url('form-input-barang') ?>">Tambah data&nbsp;<i class="fas fa-plus fa-sm"></i></a>
               </div>
             </div>
             <div class="card-body mt-3">
-              </div>
+              <table id="myTable" class="display table-responsive" style="width:100%">
+                <thead>
+                  <tr class="text-center">
+                    <th width="1%">No</th>
+                    <th>ID Barang</th>
+                    <th>Bill</th>
+                    <th>Status</th>
+                    <th>Port</th>
+                    <th>Tanggal</th>
+                    <th>Waktu</th>
+                    <th>Deskripsi</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+              </table>
             </div>
-            
+          </div>
+
         </div>
         <!-- /.col-md-6 -->
       </div>
@@ -44,16 +59,227 @@
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
-<!-- Main Footer -->
-<!-- <footer class="main-footer">
-      <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-      All rights reserved.
-      <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> 3.2.0
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-    </footer> -->
+      <div class="modal-body">
+        <form id="myForm">
+          <div class="row">
+            <div class="form-group col col-lg-6">
+              <input type="text" id="id-barang" class="form-control">
+              <label for="id-barang">ID barang</label>
+            </div>
+            <div class="form-group col col-lg-6">
+              <input type="text" id="bill-landing" class="form-control" name="bill_landing">
+              <label for="bill-landing">Bill of landing</label>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="form-group col col-lg-12">
+              <textarea type="text" id="deskripsi-barang" class="form-control" required></textarea>
+              <label for="deskripsi-barang">Deskripsi barang</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Main Footer -->
+<footer class="main-footer">
+  <strong>Copyright &copy; 2014 - <?= date('Y') ?> <a href="https://adminlte.io">User Not Found</a>.</strong>
+  All rights reserved.
+  <div class="float-right d-none d-sm-inline-block">
+    <b>Version</b> 1.0.0
+  </div>
+</footer>
 <!-- ./wrapper -->
 </body>
-</html>
+<script>
+$(document).ready(function() {
+  $(document).on('click', '#btn-update', function(e) {
+    e.preventDefault(); // Mencegah aksi default tombol
+    // Mengambil ID barang dari atribut data-id
+    var id_barang = $(this).data('id');
+    console.log(id_barang);
+    Swal.fire({
+      title: 'Konfirmasi',
+      text: 'Apakah Anda ingin mengupdate status barang ?' ,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#ffc107',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, update!',
+      cancelButtonText: 'Batal'
+    }).then((isConfirmed) => {
+      if (isConfirmed) {
+        $.ajax({
+          url: '<?= site_url('update-pengiriman') ?>', // Ganti 'your_controller' dengan nama controller yang sesuai
+          type: 'POST',
+          dataType: 'json',
+          data: {
+            id_barang: id_barang,
+            "<?= $csrf['name'] ?>": "<?= $csrf['hash'] ?>"
+          },
+          success: function(response) {
+            console.log(response);
+            if (response.status === 'success') {
+              Swal.fire(
+                        'Berhasil!',
+                        'Data telah berhasil diupdate.',
+                        'success'
+                    ).then(() => {
+                        location.reload(); // Refresh halaman setelah konfirmasi
+                    });
+            } else {
+                    Swal.fire(
+                        'Gagal!',
+                        'Terjadi kesalahan: ' + response.message,
+                        'error'
+                    );
+                }
+          },
+          error: function(xhr, status, error) {
+            console.error('AJAX Error: ' + error);
+            Swal.fire("Error!", "Terjadi kesalahan saat mengupdate status.", "error");
+          }
+        });
+      }
+    });
+  });
+});
+</script>
+<script>
+  $(document).ready(function() {
+    $(document).on('click', '#btn-view', function(e) {
+      e.preventDefault(); // Mencegah aksi default tombol
+      var id_barang = $(this).data('id');
+      $.ajax({
+        url: '<?= site_url('fetch-pengiriman') ?>',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+          id_barang: id_barang
+        },
+        success: function(response) {
+          $('#id-barang').val(response.id_barang);
+          $('#bill-landing').val(response.bill);
+          $('#deskripsi-barang').val(response.deskripsi);
 
+          // Tampilkan modal setelah data diambil
+          $('#exampleModal').modal('show');
+        },
+        error: function(xhr, status, error) {
+          console.error('AJAX Error: ' + error);
+        }
+      });
+    });
+  });
+</script>
+<script>
+  $(document).ready(function() {
+    // Event listener untuk tombol view
+    $(document).on('click', '#btn-x', function(e) {
+      e.preventDefault(); // Mencegah aksi default tombol
+      // var id_barang = $(this).data('id');
+
+      // Tampilkan alert
+      alert('Unknown');
+
+      // Kamu bisa menambahkan kode lain di sini, misalnya mengambil data melalui AJAX
+
+      // Tampilkan modal setelah alert
+      $('#exampleModal').modal('show');
+    });
+  });
+</script>
+
+
+<!-- <script>
+  $(document).ready(function() {
+    // Event listener untuk tombol view
+    $(document).on('click', '#btn-view', function(e) {
+      e.preventDefault(); // Mencegah aksi default tombol
+      var id_barang = $(this).data('id'); // Mengambil nilai dari atribut data-id
+      console.log(id_barang); // Cek apakah id_barang berhasil diambil
+      $('#id-barang').text(id_barang); // Menampilkan id_barang di dalam modal
+      $('#exampleModal').modal('show'); // Menampilkan modal
+    });
+  });
+</script> -->
+
+<script>
+  window.addEventListener('load', function() {
+    const card = document.getElementById('myCard'); // Pastikan ini sesuai dengan ID card
+    card.classList.add('in'); // Menambahkan class 'in' untuk memicu animasi
+  });
+</script>
+<script>
+  $(document).ready(function() {
+    // Inisialisasi DataTable
+    $('#myTable').DataTable({
+      processing: true, // Memproses data di server
+      serverSide: true, // Aktifkan server-side processing
+      paging: true, // Aktifkan pagination
+      lengthChange: true, // Pilihan jumlah data per halaman
+      searching: true, // Aktifkan fitur pencarian
+      ordering: true, // Aktifkan pengurutan kolom
+      info: true, // Tampilkan info tabel (jumlah data, halaman, dll.)
+      autoWidth: false, // Atur lebar kolom otomatis
+      responsive: true, // Agar tabel responsif di berbagai ukuran layar
+      pageLength: 2,
+      lengthMenu: [2, 4, 10, 20, 50, 100, 200, 500],
+      ajax: {
+        url: "<?= base_url('get-pengiriman') ?>", // Ganti dengan URL controller CodeIgniter Anda
+        type: "GET" // Gunakan metode GET untuk mengirim data
+      },
+      columns: [{
+          data: "no"
+        },
+        {
+          data: "id_barang"
+        },
+        {
+          data: "bill"
+        },
+        {
+          data: "status"
+        },
+        {
+          data: "port"
+        },
+        {
+          data: "tgl"
+        },
+        {
+          data: "waktu"
+        },
+        {
+          data: "deskripsi"
+        },
+        {
+          data: "action"
+        }
+      ],
+      // // Jika ingin menambahkan tombol export dan fitur lain
+      // dom: 'Bfrtip',
+      // buttons: [
+      //   'copy', 'csv', 'excel', 'pdf', 'print'      // Ekspor data ke berbagai format
+      // ]
+    });
+  });
+</script>
+
+
+</html>

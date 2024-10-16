@@ -20,11 +20,14 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
+                    <div class="d-flex justify-content-center align-item-center">
+
+                    </div>
                     <div id="myCard" class="card shadow fade-scale">
                         <div class="card-header border-0" style="background-color: rgba(0, 20, 80, 0.9); backdrop-filter: blur(8px);">
                             <div class="d-flex justify-content-between">
                                 <h3 class="card-title text-white">Form Input Barang</h3>
-                                <a class="button-32" href="javascript:void(0);">Tambah data&nbsp;<i class="fas fa-plus fa-sm"></i></a>
+                                <a class="button-32" href="<?= site_url('/') ?>">My Storage&nbsp;<i class="fa-solid fa-box fa-sm"></i></a>
                             </div>
                         </div>
                         <div class="card-body mt-3">

@@ -63,6 +63,9 @@ $route['beranda'] = 'Maincontroller/index';
 $route['form-input-barang'] = 'Maincontroller/form_input_barang';
 $route['logout'] = 'Maincontroller/logout';
 $route['post-pengiriman'] = 'JqueryController/post_pengiriman';
+$route['get-pengiriman'] = 'JqueryController/get_pengiriman';
+$route['fetch-pengiriman'] = 'JqueryController/fetch_pengiriman';
+$route['update-pengiriman'] = 'JqueryController/update_pengiriman';
 // route_group('prefix', [
 //     'post-pengiriman' => 'JqueryController/post_pengiriman',
 // ]);
