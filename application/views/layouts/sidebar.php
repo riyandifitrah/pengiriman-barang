@@ -5,8 +5,6 @@
       <div class="spinner"></div> <!-- Spinner -->
       <p class="loading-text">Please wait<span id="dots">...</span></p> <!-- Teks Loading -->
     </div>
-
-
     <!-- Konten halaman lainnya -->
 
     <div class="wrapper">
@@ -92,7 +90,7 @@
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>
-                    <?= $parse['title'] ?>
+                    <?= $main_title ?? 'Core Storage' ?>
                     <i class="right fas fa-angle-left"></i>
                   </p>
                 </a>
@@ -121,31 +119,37 @@
                 </ul>
               </li>
               <li class="nav-item">
-                <a href="pages/widgets.html" class="nav-link">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>
+                    Check Package
+                    <i class="fas fa-angle-left right"></i>
+                    <!-- <span class="badge badge-info right">6</span> -->
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="<?= base_url('arrived') ?>" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Arrived Data</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="<?= base_url('received') ?>" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Received Data </p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-th"></i>
                   <p>
                     Widgets
                     <span class="right badge badge-danger">New</span>
                   </p>
                 </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-copy"></i>
-                  <p>
-                    Layout Options
-                    <i class="fas fa-angle-left right"></i>
-                    <span class="badge badge-info right">6</span>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="pages/layout/collapsed-sidebar.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Collapsed Sidebar</p>
-                    </a>
-                  </li>
-                </ul>
               </li>
             </ul>
           </nav>

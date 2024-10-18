@@ -293,6 +293,21 @@
 .btn-color-4{
   background-color: rgb(23, 162, 184);
 }
+.btn-color-5{
+  background-color: rgb(40, 167, 69);
+}
+.btn-color-6{
+  background-color: rgb(108, 117, 125);
+}
+.btn-color-7{
+  background-color: rgb(248, 249, 250);
+}
+.btn-color-8{
+  background-color: rgb(52, 58, 64);
+}
+.btn-color-9{
+  background-color: rgb(0, 123, 255);
+}
 
 .loading-animation {
   position: fixed;

@@ -46,13 +46,32 @@ class Any_model extends MY_Model
 			return null;
 		}
 	}
-	public function update_status($id)
+	public function update_status($id, $status)
 	{
-		// Mengatur zona waktu ke Asia/Jakarta
-		date_default_timezone_set('Asia/Jakarta');
-		$this->db->set('status', 2);
+		$this->db->set('status', $status);
 		$this->db->set('updated_at', date('Y-m-d H:i:s'));
 		$this->db->where('id_barang', $id);
 		return $this->db->update('form_pengiriman');
+	}
+	public function status_count()
+	{
+		$data = [];
+		$this->db->select('status, COUNT(*) as count');
+		$this->db->from('form_pengiriman');
+		$this->db->group_by('status');
+		$query = $this->db->get();
+		$status_counts = [
+			1 => 0,
+			2 => 0,
+			3 => 0
+		];
+		foreach ($query->result() as $row) {
+			$status_counts[$row->status] = (int) $row->count;  
+		}
+		return [
+			'status_1' => $status_counts[1],
+			'status_2' => $status_counts[2],
+			'status_3' => $status_counts[3]
+		];
 	}
 }

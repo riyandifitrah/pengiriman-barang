@@ -23,11 +23,27 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-12">
+          <div class="card shadow">
+            <div class="card-header rounded border-0" style="background-image: linear-gradient(to right, #000328 , #00458e); backdrop-filter: blur(8px); color:white">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="card rounded p-2" style="background-color: #f1f1f1;">
+                  <h5 class="card-title text-dark mb-0">Received</h5>
+                  <h3 class="card-text text-dark" id="status_1"></h3>
+                </div>
+                <!-- Icon Section -->
+                <div>
+                <i class="fa-solid fa-hand-holding-heart fa-3x text-white"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
           <div id="myCard" class="card shadow fade-scale">
             <div class="card-header border-0" style="background-color: rgba(0, 20, 80, 0.9); backdrop-filter: blur(8px);">
               <div class="d-flex justify-content-between">
                 <h3 class="card-title text-white">Data Pengiriman</h3>
-                <a class="button-32" href="<?= site_url('form-input-barang') ?>">Tambah data&nbsp;<i class="fas fa-plus fa-sm"></i></a>
+                <!-- <a class="button-32" href="<?= site_url('form-input-barang') ?>">Tambah data&nbsp;<i class="fas fa-plus fa-sm"></i></a> -->
               </div>
             </div>
             <div class="card-body mt-3">
@@ -106,151 +122,6 @@
 </footer>
 <!-- ./wrapper -->
 </body>
-<script>
-  $(document).on('click', '#btn-update', function(e) {
-    e.preventDefault();
-    var id_barang = $(this).data('id');
-    var status = 2;
-
-    Swal.fire({
-      title: 'Konfirmasi',
-      text: 'Apakah Anda ingin mengupdate status barang ?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#ffc107',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Ya, update!',
-      cancelButtonText: 'Batal'
-    }).then((result) => {
-      if (result.value) {
-        $.ajax({
-          url: '<?= site_url('update-pengiriman') ?>',
-          type: 'POST',
-          dataType: 'json',
-          data: {
-            id_barang: id_barang,
-            status: status,
-            "<?= $csrf['name'] ?>": "<?= $csrf['hash'] ?>"
-          },
-          success: function(response) {
-            if (response.status === 'success') {
-              Swal.fire(
-                'Berhasil!',
-                'Data telah berhasil diupdate.',
-                'success'
-              ).then(() => {
-                location.reload();
-              });
-            } else {
-              Swal.fire(
-                'Gagal!',
-                'Terjadi kesalahan: ' + response.message,
-                'error'
-              );
-            }
-          },
-          error: function(xhr, status, error) {
-            console.error('AJAX Error: ' + error);
-            Swal.fire("Error!", "Terjadi kesalahan saat mengupdate status.", "error");
-          }
-        });
-      } else {
-        return false;
-      }
-    });
-  });
-  $(document).on('click', '#btn-update-arrive', function(e) {
-    e.preventDefault();
-    var id_barang = $(this).data('idb');
-    var status = 3; 
-
-    Swal.fire({
-      title: 'Konfirmasi',
-      text: 'Apakah Anda ingin mengupdate status barang ke Arrived at Port?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#ffc107',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Ya, update!',
-      cancelButtonText: 'Batal'
-    }).then(result => {
-      if (result.value) {
-        $.ajax({
-          url: '<?= site_url('update-pengiriman') ?>',
-          type: 'POST',
-          dataType: 'json',
-          data: {
-            id_barang: id_barang,
-            status: status, 
-            "<?= $csrf['name'] ?>": "<?= $csrf['hash'] ?>"
-          },
-          success: function(response) {
-            if (response.status === 'success') {
-              Swal.fire('Berhasil!', 'Data telah berhasil diupdate.', 'success').then(() => {
-                location.reload();
-              });
-            } else {
-              Swal.fire('Gagal!', 'Terjadi kesalahan: ' + response.message, 'error');
-            }
-          },
-          error: function(xhr, status, error) {
-            Swal.fire("Error!", "Terjadi kesalahan saat mengupdate status.", "error");
-          }
-        });
-      }
-    });
-  });
-</script>
-<script>
-  $(document).ready(function() {
-    $(document).on('click', '#btn-view', function(e) {
-      e.preventDefault();
-      var id_barang = $(this).data('id');
-      $.ajax({
-        url: '<?= site_url('fetch-pengiriman') ?>',
-        type: 'GET',
-        dataType: 'json',
-        data: {
-          id_barang: id_barang
-        },
-        success: function(response) {
-          console.log(response);
-          $('#id-barang').val(response.id_barang);
-          $('#bill-landing').val(response.bill);
-          $('#deskripsi-barang').val(response.deskripsi);
-
-
-          $('#exampleModal').modal('show');
-        },
-        error: function(xhr, status, error) {
-          console.error('AJAX Error: ' + error);
-        }
-      });
-    });
-  });
-</script>
-<script>
-  $(document).ready(function() {
-    $(document).on('click', '#btn-x', function(e) {
-      e.preventDefault();
-      alert('Unknown');
-      $('#exampleModal').modal('show');
-    });
-  });
-</script>
-
-
-<!-- <script>
-  $(document).ready(function() {
-    $(document).on('click', '#btn-view', function(e) {
-      e.preventDefault(); 
-      var id_barang = $(this).data('id'); 
-      console.log(id_barang); 
-      $('#id-barang').text(id_barang); 
-      $('#exampleModal').modal('show'); 
-    });
-  });
-</script> -->
 
 <script>
   window.addEventListener('load', function() {
@@ -275,7 +146,10 @@
       lengthMenu: [10, 15, 20, 35, 50, 100, 200, 500],
       ajax: {
         url: "<?= base_url('get-pengiriman') ?>",
-        type: "GET"
+        type: "GET",
+        data: {
+          status: 3
+        }
       },
       columns: [{
           data: "no"
@@ -312,7 +186,26 @@
       // ]
     });
   });
+
 </script>
+<!-- <script>
+$(document).ready(function() {
+  $.ajax({
+    url: "<?= base_url('get-pengiriman') ?>",
+    type: 'GET',
+    dataType: 'json',
+    success: function(response) {
+      console.log(response); // Periksa respons yang diterima
 
-
-</html>
+      // Akses properti status_1, status_2, dan status_3
+      var totalPengiriman = response.totalPengiriman; // Mengakses objek totalPengiriman
+      $('#status_1').text(totalPengiriman.status_1 || 0); // Menampilkan status_1
+      $('#status_2').text(totalPengiriman.status_2 || 0); // Menampilkan status_2
+      $('#status_3').text(totalPengiriman.status_3 || 0); // Menampilkan status_3
+    },
+    error: function(xhr, status, error) {
+      console.error('AJAX Error: ' + error);
+    }
+  });
+});
+</script> -->

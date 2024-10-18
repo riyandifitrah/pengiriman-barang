@@ -8,8 +8,8 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
 
-                        <li class="breadcrumb-item"><a href="#"><?= $parse['title'] ?></a></li>
-                        <li class="breadcrumb-item active"><?= $parse['content'] ?></li>
+                        <li class="breadcrumb-item"><a href="#"><?= $title ?></a></li>
+                        <li class="breadcrumb-item active"><?= $content ?></li>
                     </ol>
                 </div><!-- /.col -->
 
@@ -185,9 +185,6 @@
         });
     });
 </script>
-
-
-
 <script>
     window.addEventListener('load', function() {
         const card = document.getElementById('myCard'); // Pastikan ini sesuai dengan ID card

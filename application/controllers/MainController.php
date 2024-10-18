@@ -32,8 +32,8 @@ class MainController extends CI_Controller
 			'csrf' => $this->csrf,
 		);
 		
-		$this->load->view('layouts/wrapper_top.php', ['parse' => $parse]);
-		$this->load->view('layouts/sidebar.php', ['parse' => $parse]);
+		$this->load->view('layouts/wrapper_top.php',$parse);
+		$this->load->view('layouts/sidebar.php',$parse);
 		$this->load->view('index', $parse);
 	}
 	public function form_input_barang()
@@ -73,8 +73,32 @@ class MainController extends CI_Controller
 			'id_barang' => $id_barang,
 			'csrf' => $this->csrf
 		);
-		$this->load->view('layouts/wrapper_top.php', ['parse' => $parse]);
-		$this->load->view('layouts/sidebar.php', ['parse' => $parse]);
+		$this->load->view('layouts/wrapper_top.php', $parse);
+		$this->load->view('layouts/sidebar.php', $parse);
 		$this->load->view('form_input_barang', $data);
+	}
+	public function arrived() {
+		$parse = array(
+			'title' => 'Arrived Data',
+			'header' => 'Arrived Data',
+			'main_menu' => 'Tambah Data',
+			'content' => 'Tabel Arrived',
+			
+		);
+		$this->load->view('layouts/wrapper_top.php', $parse);
+		$this->load->view('layouts/sidebar.php', $parse);
+		$this->load->view('arrived');
+	}
+	public function received() {
+		$parse = array(
+			'title' => 'Received Data',
+			'header' => 'Received Data',
+			'main_menu' => 'Tambah Data',
+			'content' => 'Tabel Received',
+			
+		);
+		$this->load->view('layouts/wrapper_top.php', $parse);
+		$this->load->view('layouts/sidebar.php', $parse);
+		$this->load->view('received');
 	}
 }

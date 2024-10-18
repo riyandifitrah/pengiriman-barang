@@ -61,11 +61,18 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['beranda'] = 'Maincontroller/index';
 $route['form-input-barang'] = 'Maincontroller/form_input_barang';
+$route['arrived'] = 'Maincontroller/arrived';
+$route['received'] = 'Maincontroller/received';
 $route['logout'] = 'Maincontroller/logout';
+
 $route['post-pengiriman'] = 'JqueryController/post_pengiriman';
 $route['get-pengiriman'] = 'JqueryController/get_pengiriman';
 $route['fetch-pengiriman'] = 'JqueryController/fetch_pengiriman';
 $route['update-pengiriman'] = 'JqueryController/update_pengiriman';
+
+$route['get-arrived'] = 'JqueryController/get_arrived';
+$route['get-received'] = 'JqueryController/get_received';
+
 // route_group('prefix', [
 //     'post-pengiriman' => 'JqueryController/post_pengiriman',
 // ]);
