@@ -1,6 +1,7 @@
 </style>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
+  <?php if ($role_id != 1) :?>
   <div class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
@@ -17,7 +18,6 @@
     </div><!-- /.container-fluid -->
   </div>
   <!-- /.content-header -->
-
   <!-- Main content -->
   <div class="content">
     <div class="container-fluid">
@@ -56,6 +56,7 @@
     </div>
     <!-- /.container-fluid -->
   </div>
+  <?php endif ?>
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
