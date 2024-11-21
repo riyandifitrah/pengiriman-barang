@@ -15,7 +15,9 @@ class MainController extends CI_Controller
 			'hash' => $this->security->get_csrf_hash()
 		);
 		$this->load->model('Any_model', 'am');
+		$this->load->model('User_model', 'sm');
 		$this->user_menu = get_user_menu($this->session->userdata('role_id'));
+		$this->username = $this->session->userdata('username');
 		
 	}
 	public function logout()
@@ -36,7 +38,7 @@ class MainController extends CI_Controller
 	}
 	public function index()
 	{
-
+		
 		$parse = array(
 			'title' => 'Pengiriman Barang',
 			'header' => 'Pengiriman barang',
@@ -44,7 +46,10 @@ class MainController extends CI_Controller
 			'content' => 'Data Barang',
 			'csrf' => $this->csrf,
 			'main_menu' => $this->user_menu,
+			'role_id' => $this->session->userdata('role_id'),
+			'user_data' => $this->sm->user_profile($this->username)
 		);
+		// die_dump($parse);
 		$this->load->view('layouts/wrapper_top.php', $parse);
 		$this->load->view('layouts/sidebar.php', $parse);
 		$this->load->view('index', $parse);

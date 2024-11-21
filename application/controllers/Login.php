@@ -31,6 +31,7 @@ class Login extends CI_Controller
 		$uname = $this->input->post('uname') ?? '';
 		$upass = $this->input->post('upass') ?? '';
 		$check_log = $this->us_model->check_session($uname);
+		
 		if ($check_log && password_verify($upass, $check_log->password)) {
 			$resp['status'] = true;
 			$session_data = array(
@@ -40,7 +41,7 @@ class Login extends CI_Controller
 				'role_name' => $check_log->role_name,
 				'logged_in' => TRUE
 			);
-			// die_dump($check_log);
+			
 			$this->session->set_userdata($session_data);
 			$cookie = array(
 				'name' => 'userId',
@@ -49,6 +50,7 @@ class Login extends CI_Controller
 			);
 			set_cookie($cookie);
 			$this->us_model->update_login($check_log->id);
+			// die_dump($this->us_model->update_login($check_log->id));
 		}
 		else {
 			// Tambahkan token baru ke respons ketika login gagal

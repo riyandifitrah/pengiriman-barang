@@ -81,43 +81,65 @@
               </button>
             </div>
             <div class="modal-body">
-              <p>This is the profile modal.</p>
+              <table width=100% class='table table-bordered'>
+                <thead>
+                  <tr>
+                    <td width=2%><i class="fa-regular fa-user"></i></td>
+                    <td width=1%>:</td>
+                    <td><?= $user_data->username ?? '' ?></td>
+                  </tr>
+                  <tr>
+                    <td width=2%><i class="fa-solid fa-signal"></i></td>
+                    <td width=1%>:</td>
+                    <td><?= ($user_data->login_start ? '<span class="badge badge-success right">Online</span> <br> Login at :&nbsp;' . date('Y-m-d H:i:s', strtotime($user_data->login_start)) : '<span class="badge badge-danger right">Disconnected</span> <br>') ?></td>
+                  </tr>
+                  <tr>
+                    <td width=2%><i class="fa-solid fa-circle-info"></i></td>
+                    <td width=1%>:</td>
+                    <td>Role <?= $user_data->role_name  ?></td>
+                  </tr>
+                </thead>
+              </table>
             </div>
-            <div class="modal-body">
-              <div class="card mt-3" id="addUserCard" style="display: none;">
-                <div class="card-header">
-                  Form Add User
-                </div>
-                <div class="card-body">
-                  <form id="addUserForm">
-                    <div class="form-group">
-                      <input type="text" class="form-control" id="username" required>
-                      <label for="username">Username</label>
-                    </div>
-                    <div class="form-group">
-                      <input type="password" class="form-control" id="password" required>
-                      <label for="password">Password</label>
-                    </div>
-                    <div class="form-group">
-                      <select name="role" id="role">
-                        <option selected disabled>--:--</option>
-                        <option value="1">Admin</option>
-                        <option value="2">Sender</option>
-                        <option value="3">Harbor</option>
-                        <option value="4">Receiver</option>
-                      </select>
-                    </div>
-                    <!-- <div class="card-footer"> -->
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <!-- </div> -->
-                  </form>
+            <?php if ($role_id == 1 || $role_id == 5): ?>
+              <div class="modal-body">
+                <div class="card mt-3" id="addUserCard" style="display: none;">
+                  <div class="card-header">
+                    Form Add User
+                  </div>
+                  <div class="card-body">
+                    <form id="addUserForm">
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="username" required>
+                        <label for="username">Username</label>
+                      </div>
+                      <div class="form-group">
+                        <input type="password" class="form-control" id="password" required>
+                        <label for="password">Password</label>
+                      </div>
+                      <div class="form-group">
+                        <select name="role" id="role">
+                          <option selected disabled>--:--</option>
+                          <option value="1">Admin</option>
+                          <option value="2">Sender</option>
+                          <option value="3">Harbor</option>
+                          <option value="4">Receiver</option>
+                        </select>
+                      </div>
+                      <!-- <div class="card-footer"> -->
+                      <button type="submit" class="btn btn-primary">Save</button>
+                      <!-- </div> -->
+                    </form>
+                  </div>
                 </div>
               </div>
-            </div>
+            <?php endif; ?>
             <div class="modal-footer">
-              <button type="button" class="btn btn-warning" id="btn-add">
-                <i id="icon-toggle" class="fas fa-user-plus"></i>
-              </button>
+              <?php if ($role_id == 1 || $role_id == 5): ?>
+                <button type="button" class="btn btn-warning" id="btn-add">
+                  <i id="icon-toggle" class="fas fa-user-plus"></i>
+                </button>
+              <?php endif; ?>
               <button type="button" class="btn btn-danger" id="btn-logout"><i class="fa-solid fa-power-off"></i>&nbsp;Log Out</button>
             </div>
           </div>
@@ -142,17 +164,16 @@
               <img src="<?= base_url('public/assets/dist/img/user2-160x160.jpg') ?>" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-              <?php foreach ($main_menu as $user ) {?>
+              <?php foreach ($main_menu as $user) { ?>
                 <a href="#" class="d-block">
                   <?= $user['username'] ?? '' ?>
-                  </a>
-                <?php } ?>
+                </a>
+              <?php } ?>
             </div>
           </div>
           <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
               <?php foreach ($main_menu as $menu): ?>
-                
                 <li class="nav-item">
                   <a href="#" class="nav-link">
                     <i class="nav-icon <?= $menu['icon'] ?>"></i>
@@ -162,9 +183,16 @@
                     </p>
                   </a>
                   <ul class="nav nav-treeview">
+                    <?php if ($menu['username'] == 'Admin') { ?>
+                      <li class="nav-item">
+                        <a type="button" class="nav-link" data-toggle="modal" data-target="#profileModal">
+                          <i class="far fa-circle nav-icon"></i>Tambah User
+                        </a>
+                      </li>
+                    <?php }  ?>
                     <?php foreach ($menu['sub_menus'] as $sub_menu): ?>
                       <li class="nav-item">
-                        <a href="<?= $sub_menu['url'] ?>" class="nav-link">
+                        <a href="<?= $sub_menu['url'] ?? '' ?>" class="nav-link">
                           <i class="<?= $sub_menu['icon'] ?>"></i>
                           <p><?= $sub_menu['title'] ?></p>
                         </a>
@@ -293,10 +321,10 @@
                   'Gagal!',
                   'Terjadi kesalahan: ' + response.message,
                   'error',
-                ).then(()=>{
+                ).then(() => {
                   location.reload();
                 });
-                
+
               }
             },
             error: function(ts) {
@@ -344,7 +372,7 @@
                 if (result.value) {
                   let my_data = gatherUserData(); // Mengumpulkan data
                   sendUserDataAjax(my_data); // Mengirim data
-                  
+
                 }
               });
             }
@@ -352,7 +380,7 @@
         });
       </script>
 
-<!-- <li class="nav-item">
+      <!-- <li class="nav-item">
                   <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-tachometer-alt"></i>
                     <p>

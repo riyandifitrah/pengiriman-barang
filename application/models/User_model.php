@@ -11,7 +11,7 @@ class User_model extends MY_Model
 
 	public function check_session($username)
 	{
-		$this->db->select('ms.*, mr.*')
+		$this->db->select('ms.*, mr.role_name, mr.role_level')
 			->from(static::PREFIX_USER_TABLE . ' as ms')
 			->join(static::PREFIX_ROLE_TABLE . ' as mr', 'ms.role_id = mr.role_level', 'INNER')
 			->where('ms.username', $username);
@@ -25,11 +25,12 @@ class User_model extends MY_Model
 			->from(static::PREFIX_USER_TABLE . ' as ms')
 			->join(static::PREFIX_ROLE_TABLE . ' as mr', 'ms.role_id = mr.role_level', 'INNER')
 			->where('ms.username', $username);
-		$resp = $this->db->get()->get();
+		$resp = $this->db->get()->row();
 		return $resp ? $resp :'';
 	}
 	public function update_login($id)
 	{
+		
 		$data = array(
 			'login_start' => date('Y-m-d H:i:s'),
 			'login_notes' => 1
@@ -44,6 +45,7 @@ class User_model extends MY_Model
 	}
 	public function update_logout($id)
 	{
+		
 		$data = array(
 			'login_last' => date('Y-m-d H:i:s'),
 			'login_notes' => 0

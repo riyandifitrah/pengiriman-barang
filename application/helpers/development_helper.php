@@ -42,18 +42,13 @@ if (!function_exists('get_user_menu')) {
 				'main_menu' => [
 					[
 						'username' => 'Admin',
-						'title' => 'Pengiriman Barang',
-						'icon' => 'fas fa-shipping-fast',
+						'title' => 'Add User',
+						'icon' => 'fas fa-user-plus',
 						'sub_menus' => [
 							[
-								'title' => 'Data Barang',
-								'url' => base_url('beranda'),
-								'icon' => 'far fa-circle nav-icon',
-							],
-							[
-								'title' => 'Form Input Barang',
-								'url' => base_url('form-input-barang'),
-								'icon' => 'far fa-circle nav-icon',
+								'title' => '',
+								'url' => '',
+								'icon' => '',
 							],
 						],
 					],
