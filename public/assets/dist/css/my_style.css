@@ -376,3 +376,34 @@
   opacity: 1;
   transform: scale(1); /* Skala kembali ke ukuran normal */
 }
+
+/* Custom slide-in modal animation */
+@keyframes slideIn {
+  from {
+      transform: translateY(-100%);
+      opacity: 0;
+  }
+  to {
+      transform: translateY(0);
+      opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+      transform: translateY(0);
+      opacity: 1;
+  }
+  to {
+      transform: translateY(-100%);
+      opacity: 0;
+  }
+}
+
+.modal.slide .modal-dialog {
+  animation: slideIn 0.5s forwards;
+}
+
+.modal.slide-out .modal-dialog {
+  animation: slideOut 0.5s forwards;
+}

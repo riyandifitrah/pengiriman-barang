@@ -27,7 +27,7 @@
             <div class="card-header rounded border-0" style="background-image: linear-gradient(to right, #000328 , #00458e); backdrop-filter: blur(8px); color:white">
               <div class="d-flex justify-content-between align-items-center">
                 <div class="card rounded p-2" style="background-color: #f1f1f1;">
-                  <h5 class="card-title text-dark mb-0">Received</h5>
+                  <h5 class="card-title text-dark mb-0 font-weight-bold">Received</h5>
                   <h3 class="card-text text-dark" id="status_1"></h3>
                 </div>
                 <!-- Icon Section -->
@@ -42,7 +42,7 @@
           <div id="myCard" class="card shadow fade-scale">
             <div class="card-header border-0" style="background-color: rgba(0, 20, 80, 0.9); backdrop-filter: blur(8px);">
               <div class="d-flex justify-content-between">
-                <h3 class="card-title text-white">Data Pengiriman</h3>
+                <h3 class="card-title text-white">Data Received</h3>
                 <!-- <a class="button-32" href="<?= site_url('form-input-barang') ?>">Tambah data&nbsp;<i class="fas fa-plus fa-sm"></i></a> -->
               </div>
             </div>
@@ -107,7 +107,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
       </div>
     </div>
   </div>

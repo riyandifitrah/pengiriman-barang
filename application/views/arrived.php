@@ -27,7 +27,7 @@
             <div class="card-header rounded border-0" style="background-image: linear-gradient(to right, #000328 , #00458e); backdrop-filter: blur(8px); color:white">
               <div class="d-flex justify-content-between align-items-center">
                 <div class="card rounded p-2" style="background-color: #f1f1f1;">
-                  <h5 class="card-title text-dark mb-0">Arrived</h5>
+                  <h5 class="card-title text-dark mb-0 font-weight-bold">Arrived</h5>
                   <h3 class="card-text text-dark" id="status_3"></h3>
                 </div>
                 <!-- Icon Section -->
@@ -44,7 +44,7 @@
       <div id="myCard" class="card shadow fade-scale">
         <div class="card-header border-0" style="background-color: rgba(0, 20, 80, 0.9); backdrop-filter: blur(8px);">
           <div class="d-flex justify-content-between">
-            <h3 class="card-title text-white">Data Pengiriman</h3>
+            <h3 class="card-title text-white">Data Arrived</h3>
             <!-- <a class="button-32" href="<?= site_url('form-input-barang') ?>">Tambah data&nbsp;<i class="fas fa-plus fa-sm"></i></a> -->
           </div>
         </div>
@@ -64,20 +64,16 @@
               </tr>
             </thead>
           </table>
-        </div>
+          </div>
+        <!-- /.col-md-6 -->
       </div>
-
+      <!-- /.row -->
     </div>
-    <!-- /.col-md-6 -->
+    <!-- /.container-fluid -->
   </div>
-  <!-- /.row -->
-</div>
-<!-- /.container-fluid -->
-</div>
-<!-- /.content -->
+  <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -109,7 +105,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
       </div>
     </div>
   </div>
@@ -189,3 +185,47 @@
     });
   });
 </script>
+<script>
+$(document).on('click', '#btn-update-arrive', function(e) {
+    e.preventDefault();
+    var id_barang = $(this).data('idb');
+    var status = 3; 
+
+    Swal.fire({
+      title: 'Konfirmasi',
+      text: 'Apakah Anda ingin mengupdate status barang ke Arrived at Port?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#ffc107',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, update!',
+      cancelButtonText: 'Batal'
+    }).then(result => {
+      if (result.value) {
+        $.ajax({
+          url: '<?= site_url('update-pengiriman') ?>',
+          type: 'POST',
+          dataType: 'json',
+          data: {
+            id_barang: id_barang,
+            status: status, 
+            "<?= $csrf['name'] ?>": "<?= $csrf['hash'] ?>"
+          },
+          success: function(response) {
+
+            if (response.status === 'success') {
+              Swal.fire('Berhasil!', 'Data telah berhasil diupdate.', 'success').then(() => {
+                location.reload();
+              });
+            } else {
+              Swal.fire('Gagal!', 'Terjadi kesalahan: ' + response.message, 'error');
+            }
+          },
+          error: function(xhr, status, error) {
+            Swal.fire("Error!", "Terjadi kesalahan saat mengupdate status.", "error");
+          }
+        });
+      }
+    });
+  });
+  </script>

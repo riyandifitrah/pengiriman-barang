@@ -29,6 +29,17 @@ class Any_model extends MY_Model
 		$this->db->insert('form_pengiriman', $data);
 		return $this->db->affected_rows() != 1 ? false : true;
 	}
+	public function insert_user($data)
+	{
+		$this->db->insert('m_user', $data);
+		return $this->db->affected_rows() != 1 ? false : true;
+	}
+	public function check_username_exists($username)
+	{
+		$this->db->where('username', $username);
+		$query = $this->db->get('m_user');
+		return $query->num_rows() > 0;
+	}
 	public function get_form_pengiriman()
 	{
 		$query = $this->db->select('*')->from('form_pengiriman');
@@ -53,6 +64,13 @@ class Any_model extends MY_Model
 		$this->db->where('id_barang', $id);
 		return $this->db->update('form_pengiriman');
 	}
+	public function update_status_arrived($id, $status)
+	{
+		$this->db->set('status', $status);
+		$this->db->set('updated_second_at', date('Y-m-d H:i:s'));
+		$this->db->where('id_barang', $id);
+		return $this->db->update('form_pengiriman');
+	}
 	public function status_count()
 	{
 		$data = [];
@@ -66,7 +84,7 @@ class Any_model extends MY_Model
 			3 => 0
 		];
 		foreach ($query->result() as $row) {
-			$status_counts[$row->status] = (int) $row->count;  
+			$status_counts[$row->status] = (int) $row->count;
 		}
 		return [
 			'status_1' => $status_counts[1],

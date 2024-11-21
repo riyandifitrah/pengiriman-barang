@@ -126,8 +126,13 @@ class JqueryController extends CI_Controller
 				case 3:
 					$status = 'Received';
 					$button .= '<button type="submit" class="button-dataTable btn-color-5" id="btn-update-received" data-idb="' . $v->id_barang . '">
-                    <i class="fa-solid fa-hand-holding-heart"></i>
-                </button>';
+                    <i class="fa-solid fa-hand-holding-heart"></i></button>';
+					$button .= '<a class="button-dataTable btn-color-4" id="btn-view" 
+					data-toggle="modal" data-target="#exampleModal" 
+					data-id="' . $v->id_barang . '">
+					<i class="fa-solid fa-eye"></i>
+					</a>';
+					;
 					break;
 				default:
 					$button .= '<a class="button-dataTable btn-color-2" id="btn-x" data-id="' . $v->id_barang . '">
@@ -175,6 +180,47 @@ class JqueryController extends CI_Controller
 		$data = $this->any_model->update_status($id_barang, $status);
 
 		if ($data) {
+			echo json_encode(['status' => 'success', 'message' => 'Data berhasil disimpan']);
+		} else {
+			echo json_encode(['status' => 'error', 'message' => 'Gagal menyimpan data.']);
+		}
+	}
+	public function update_pengiriman_arrived()
+	{
+		$id_barang = $this->input->post('id_barang');
+		$status = $this->input->post('status');
+		$data = $this->any_model->update_status_arrived($id_barang, $status);
+
+		if ($data) {
+			echo json_encode(['status' => 'success', 'message' => 'Data berhasil disimpan']);
+		} else {
+			echo json_encode(['status' => 'error', 'message' => 'Gagal menyimpan data.']);
+		}
+	}
+	public function add_user()
+	{
+		$username = $this->input->post('username');
+		$password = $this->input->post('password');
+		$role = $this->input->post('role');
+
+		if (empty($username) || empty($password) || empty($role)) {
+			echo json_encode(['status' => 'error', 'message' => 'Semua field harus diisi.']);
+			return;
+		}
+
+		if ($this->any_model->check_username_exists($username)) {
+			echo json_encode(['status' => 'error', 'message' => 'Username sudah digunakan.']);
+			return;
+		}
+
+		$data = [
+			'username' => $username,
+			'password' => password_hash($password, PASSWORD_DEFAULT),
+			'role_id' => $role,
+			'created_at' => date('Y-m-d H:i:s')
+		];
+
+		if ($this->any_model->insert_user($data)) {
 			echo json_encode(['status' => 'success', 'message' => 'Data berhasil disimpan']);
 		} else {
 			echo json_encode(['status' => 'error', 'message' => 'Gagal menyimpan data.']);

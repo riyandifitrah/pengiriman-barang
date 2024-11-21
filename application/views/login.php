@@ -2,7 +2,7 @@
   <div id="loginform">
     <div class="login-box">
       <div class="login-logo">
-        <a style="text-decoration: none;"><b><?=(!empty ($title)) ? $title: '' ?></b></a>
+        <a style="text-decoration: none;"><b><?= (!empty($title)) ? $title : '' ?></b></a>
       </div>
       <div class="card">
         <div class="card-body login-card-body">
@@ -36,7 +36,7 @@
                 </div>
               </div> -->
               <div class="col-4">
-                <button type="submit" class="btn btn-primary btn-block" >Sign In</button>
+                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
               </div>
             </div>
           </form>
@@ -46,34 +46,41 @@
   </div>
 </body>
 <script type="text/javascript">
-
-  $('#formLogin').submit(function (e) {
+  $('#formLogin').submit(function(e) {
     e.preventDefault();
     uname = $('#username').val();
     upass = $('#password').val();
     if (uname != '' && upass != '') {
       $.ajax({
         type: 'POST',
-        url: '<?= base_url('Login/start_session') ?>',
-        data: { uname: uname, 
-          upass: upass, 
-          "<?= $csrf['name'] ?>": "<?= $csrf['hash'] ?>" 
+        url: '<?= site_url('login-check') ?>',
+        data: {
+          uname: uname,
+          upass: upass,
+          "<?= $csrf['name'] ?>": "<?= $csrf['hash'] ?>"
         },
         dataType: 'JSON',
-        beforeSend() {
-
-        },
         success(data) {
           // console.log(true);
+          if (data.csrf_token) {
+            $("input[name='<?= $csrf['name'] ?>']").val(data.csrf_token);
+          }
           if (data.status) {
             window.location = '<?= base_url('beranda') ?>';
           } else {
             Swal.fire({
-              icon: 'error',
               title: 'Error!',
-              text: 'Username atau Password Anda salah!',
+              text: 'Username atau password Anda salah!',
+              icon: 'error',
+              showConfirmButton: true
+            }).then(() => {
+              window.location = '<?= base_url('/') ?>';
+              // location.reload(); // Refresh halaman setelah konfirmasi
             });
-            $('#username').focus();
+
+            // alert("Ups...\n Password / Username Tidak Sesuai");
+            // location.reload();
+            // $('#username').focus();\
           }
         }
       });

@@ -71,15 +71,42 @@
       </div>
       <div class="modal-body">
         <form id="myForm">
-          <div class="row">
-            <div class="form-group col col-lg-6">
+          <div class="row mt-2">
+            <!-- <div class="form-group col col-lg-6">
               <input type="text" id="id-barang" class="form-control">
               <label for="id-barang">ID barang</label>
-            </div>
+            </div> -->
             <div class="form-group col col-lg-6">
               <input type="text" id="bill-landing" class="form-control" name="bill_landing">
               <label for="bill-landing">Bill of landing</label>
             </div>
+            <div class="form-group col col-lg-12">
+              <input type="text" id="tanggal-dibuat" class="form-control" name="tanggal-dibuat">
+              <label for="tanggal-dibuat">Tanggal Dibuat</label>
+            </div>
+            <hr>
+          </div>
+          <div class="row mt-2">
+            <div class="form-group col col-lg-6">
+              <input type="text" id="arrived-at-tgl" class="form-control" name="arrived-at-tgl">
+              <label for="arrived-at-tgl">Tiba di Port</label>
+            </div>
+            <div class="form-group col col-lg-6">
+              <input type="text" id="arrived-at-jam" class="form-control" name="arrived-at-jam" placeholder="Jam">
+              <label for="arrived-at-jam"><i class="fa-solid fa-clock"></i></label>
+            </div>
+            <hr>
+          </div>
+          <div class="row mt-2">
+            <div class="form-group col col-lg-6">
+              <input type="text" id="receiver-at-tgl" class="form-control" name="receiver-at-tgl">
+              <label for="receiver-at-tgl">Terima barang</label>
+            </div>
+            <div class="form-group col col-lg-6">
+              <input type="text" id="receiver-at-jam" class="form-control" name="receiver-at-jam" placeholder="Jam">
+              <label for="receiver-at-jam"><i class="fa-solid fa-clock"></i></label>
+            </div>
+            <hr>
           </div>
           <div class="row mt-3">
             <div class="form-group col col-lg-12">
@@ -91,7 +118,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
       </div>
     </div>
   </div>
@@ -162,7 +189,7 @@
   $(document).on('click', '#btn-update-arrive', function(e) {
     e.preventDefault();
     var id_barang = $(this).data('idb');
-    var status = 3; 
+    var status = 3;
 
     Swal.fire({
       title: 'Konfirmasi',
@@ -176,12 +203,12 @@
     }).then(result => {
       if (result.value) {
         $.ajax({
-          url: '<?= site_url('update-pengiriman') ?>',
+          url: '<?= site_url('update-pengiriman-arived') ?>',
           type: 'POST',
           dataType: 'json',
           data: {
             id_barang: id_barang,
-            status: status, 
+            status: status,
             "<?= $csrf['name'] ?>": "<?= $csrf['hash'] ?>"
           },
           success: function(response) {
@@ -215,11 +242,23 @@
         },
         success: function(response) {
           console.log(response);
-          $('#id-barang').val(response.id_barang);
+
+
+          // var createdAtParts = response.created_at.split(' ');
+          var arrivedAtParts = response.updated_at ? response.updated_at.split(' ') : ['', ''];
+          var receiverAtParts = response.updated_second_at ? response.updated_second_at.split(' ') : ['', ''];
+
+
+          $('#tanggal-dibuat').val(response.created_at);
+
+          $('#arrived-at-tgl').val(arrivedAtParts[0] || '');
+          $('#arrived-at-jam').val(arrivedAtParts[1] || '');
+          $('#receiver-at-tgl').val(receiverAtParts[0] || '');
+          $('#receiver-at-jam').val(receiverAtParts[1] || '');
+
+          $('#receiver-at').val(response.updated_second_at);
           $('#bill-landing').val(response.bill);
           $('#deskripsi-barang').val(response.deskripsi);
-
-
           $('#exampleModal').modal('show');
         },
         error: function(xhr, status, error) {

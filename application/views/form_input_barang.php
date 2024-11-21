@@ -174,8 +174,8 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Ya, submit!',
                     cancelButtonText: 'Batal'
-                }).then((isConfirmed) => {
-                    if (isConfirmed) {
+                }).then((result) => {
+                    if (result.value) {
                         let my_data = gatherData(); // Mengumpulkan data
                         sendDataAjax(my_data); // Mengirim data\
                     }

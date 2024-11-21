@@ -28,9 +28,144 @@ if (!function_exists('randomString')) {
 	}
 }
 if (!function_exists('enc')) {
-	function enc($password){
+	function enc($password)
+	{
 		$encrypted_password = password_hash($password, PASSWORD_DEFAULT);
-		return isset($encrypted_password) ? $encrypted_password : ''; 
+		return isset($encrypted_password) ? $encrypted_password : '';
+	}
+}
+if (!function_exists('get_user_menu')) {
+	function get_user_menu($role_id)
+	{
+		$menus = [
+			1 => [
+				'main_menu' => [
+					[
+						'username' => 'Admin',
+						'title' => 'Pengiriman Barang',
+						'icon' => 'fas fa-shipping-fast',
+						'sub_menus' => [
+							[
+								'title' => 'Data Barang',
+								'url' => base_url('beranda'),
+								'icon' => 'far fa-circle nav-icon',
+							],
+							[
+								'title' => 'Form Input Barang',
+								'url' => base_url('form-input-barang'),
+								'icon' => 'far fa-circle nav-icon',
+							],
+						],
+					],
+				],
+			],
+			// <i class="fas fa-angle-left right"></i>
+			// <i class="far fa-circle nav-icon"></i>
+			// <i class="far fa-circle nav-icon"></i>
+			2 => [
+				'main_menu' => [
+					[
+						'username' => 'Sender',
+						'title' => 'Pengiriman Barang',
+						'icon' => 'fas fa-shipping-fast',
+						'sub_menus' => [
+							[
+								'title' => 'Data Barang',
+								'url' => base_url('beranda'),
+								'icon' => 'far fa-circle nav-icon',
+							],
+							[
+								'title' => 'Form Input Barang',
+								'url' => base_url('form-input-barang'),
+								'icon' => 'far fa-circle nav-icon',
+							],
+						],
+					],
+				],
+			],
+			3 => [
+				'main_menu' => [
+					[
+						'username' => 'Harbors',
+						'title' => 'Check Package',
+						'icon' => 'fas fa-copy',
+						'sub_menus' => [
+							[
+								'title' => 'Arrived Data',
+								'url' => base_url('arrived'),
+								'icon' => 'far fa-circle nav-icon',
+							],
+							// [
+							// 	'title' => 'Receiver Data',
+							// 	'url' => base_url(''),
+							// 	'icon' => 'far fa-circle nav-icon',
+							// ],
+						],
+					],
+				],
+			],
+			4 => [
+				'main_menu' => [
+					[
+						'username' => 'Receiver',
+						'title' => 'Check Package',
+						'icon' => 'fas fa-copy',
+						'sub_menus' => [
+							// [
+							// 	'title' => 'Arrived Data',
+							// 	'url' => base_url('arrived'),
+							// 	'icon' => 'far fa-circle nav-icon',
+							// ],
+							[
+								'title' => 'Receiver Data',
+								'url' => base_url('received'),
+								'icon' => 'far fa-circle nav-icon',
+							],
+						],
+					],
+				],
+			],
+			5 => [
+				'main_menu' => [
+					[
+						'username' => 'root',
+						'title' => 'Pengiriman Barang',
+						'icon' => 'fas fa-shipping-fast',
+						'sub_menus' => [
+							[
+								'title' => 'Data Barang',
+								'url' => base_url('beranda'),
+								'icon' => 'far fa-circle nav-icon',
+							],
+							[
+								'title' => 'Form Input Barang',
+								'url' => base_url('form-input-barang'),
+								'icon' => 'far fa-circle nav-icon',
+							],
+						],
+					],
+					[
+
+						'title' => 'Check Package',
+						'icon' => 'fas fa-copy',
+						'sub_menus' => [
+							[
+								'title' => 'Arrived Data',
+								'url' => base_url('arrived'),
+								'icon' => 'far fa-circle nav-icon',
+							],
+							[
+								'title' => 'Receiver Data',
+								'url' => base_url('received'),
+								'icon' => 'far fa-circle nav-icon',
+							],
+						],
+					],
+				],
+			],
+		];
+		// Filter menu berdasarkan role_id
+		return $menus[$role_id]['main_menu'] ?? [];
 	}
 }
 // if (!function_exists('view')) {

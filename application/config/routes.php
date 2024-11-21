@@ -60,15 +60,18 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['beranda'] = 'Maincontroller/index';
+$route['login-check'] = 'Login/start_session';
 $route['form-input-barang'] = 'Maincontroller/form_input_barang';
 $route['arrived'] = 'Maincontroller/arrived';
 $route['received'] = 'Maincontroller/received';
-$route['logout'] = 'Maincontroller/logout';
+$route['log-out'] = 'Maincontroller/logout';
 
 $route['post-pengiriman'] = 'JqueryController/post_pengiriman';
 $route['get-pengiriman'] = 'JqueryController/get_pengiriman';
 $route['fetch-pengiriman'] = 'JqueryController/fetch_pengiriman';
 $route['update-pengiriman'] = 'JqueryController/update_pengiriman';
+$route['update-pengiriman-arived'] = 'JqueryController/update_pengiriman_arrived';
+$route['add-user'] = 'JqueryController/add_user';
 
 $route['get-arrived'] = 'JqueryController/get_arrived';
 $route['get-received'] = 'JqueryController/get_received';
