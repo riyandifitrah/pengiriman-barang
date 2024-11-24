@@ -57,6 +57,16 @@ class Any_model extends MY_Model
 			return null;
 		}
 	}
+	public function get_data_pengiriman_csv($status, $tgl_awal, $tgl_akhir)
+	{
+		$result = $this->db->select('*')
+			->from('form_pengiriman')
+			->where_in('status', $status)
+			->where('tgl >=', $tgl_awal)
+			->where('tgl <=', $tgl_akhir);
+		return $result->get()->result();
+	}
+
 	public function update_status($id, $status)
 	{
 		$this->db->set('status', $status);

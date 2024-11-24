@@ -67,12 +67,17 @@ $route['received'] = 'Maincontroller/received';
 $route['log-out'] = 'Maincontroller/logout';
 
 $route['post-pengiriman'] = 'JqueryController/post_pengiriman';
-$route['get-pengiriman'] = 'JqueryController/get_pengiriman';
 $route['fetch-pengiriman'] = 'JqueryController/fetch_pengiriman';
 $route['update-pengiriman'] = 'JqueryController/update_pengiriman';
 $route['update-pengiriman-arived'] = 'JqueryController/update_pengiriman_arrived';
 $route['add-user'] = 'JqueryController/add_user';
 
+$route['form-csv'] = 'Maincontroller/form_csv';
+$route['view-data-csv'] = 'Maincontroller/view_data_csv';
+$route['export-data-csv'] = 'Maincontroller/export_data_csv';
+
+$route['get-pengiriman'] = 'JqueryController/get_pengiriman';
+$route['get-detail-user'] = 'JqueryController/get_detail_user';
 $route['get-arrived'] = 'JqueryController/get_arrived';
 $route['get-received'] = 'JqueryController/get_received';
 

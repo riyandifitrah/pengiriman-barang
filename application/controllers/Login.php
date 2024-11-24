@@ -47,6 +47,7 @@ class Login extends CI_Controller
 				'name' => 'userId',
 				'value' => base64_encode($check_log->id), 
 				'expire' => '3600',
+				// 'expire' => '7',
 			);
 			set_cookie($cookie);
 			$this->us_model->update_login($check_log->id);

@@ -56,6 +56,58 @@
     </div>
     <!-- /.container-fluid -->
   </div>
+  <?php elseif($role_id == 1) :?>
+    <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0"></h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#"><?= $title ?></a></li>
+            <li class="breadcrumb-item active"><?= $content ?></li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+  <!-- Main content -->
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <div id="myCard" class="card shadow fade-scale">
+            <div class="card-header border-0" style="background-color: rgba(0, 20, 80, 0.9); backdrop-filter: blur(8px);">
+              <div class="d-flex justify-content-between">
+                <h3 class="card-title text-white">Detail Users</h3>
+              </div>
+            </div>
+            <div class="card-body mt-3">
+              <table id="userTable" class="display table-responsive" style="width:100%">
+                <thead>
+                  <tr class="text-center">
+                    <th width="1%">No</th>
+                    <th>Username</th>
+                    <th>Role ID</th>
+                    <th>Login Notes</th>
+                    <th>Login Start</th>
+                    <th>Last Login</th>
+                    <!-- <th>Action</th> -->
+                  </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.col-md-6 -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </div>
   <?php endif ?>
   <!-- /.content -->
 </div>
@@ -344,6 +396,55 @@
         {
           data: "action"
         }
+      ],
+      // // Jika ingin menambahkan tombol export dan fitur lain
+      // dom: 'Bfrtip',
+      // buttons: [
+      //   'copy', 'csv', 'excel', 'pdf', 'print'      // Ekspor data ke berbagai format
+      // ]
+    });
+  });
+</script>
+<script>
+  $(document).ready(function() {
+
+    $('#userTable').DataTable({
+      processing: true,
+      serverSide: true,
+      paging: true,
+      lengthChange: true,
+      searching: true,
+      ordering: true,
+      info: true,
+      autoWidth: false,
+      responsive: true,
+      pageLength: 10,
+      lengthMenu: [10, 15, 20, 35, 50, 100, 200, 500],
+      ajax: {
+        url: "<?= base_url('get-detail-user') ?>",
+        type: "GET"
+      },
+      columns: [{
+          data: "no"
+        },
+        {
+          data: "username"
+        },
+        {
+          data: "role_id"
+        },
+        {
+          data: "login_notes"
+        },
+        {
+          data: "login_start"
+        },
+        {
+          data: "login_last"
+        },
+        // {
+        //   data: "action"
+        // }
       ],
       // // Jika ingin menambahkan tombol export dan fitur lain
       // dom: 'Bfrtip',

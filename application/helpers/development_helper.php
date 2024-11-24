@@ -34,6 +34,25 @@ if (!function_exists('enc')) {
 		return isset($encrypted_password) ? $encrypted_password : '';
 	}
 }
+if (!function_exists('get_name_month')) {
+	function get_name_month(){
+		$bln = array(
+			1 => "Januari",
+			"Februari",
+			"Maret",
+			"April",
+			"Mei",
+			"Juni",
+			"July",
+			"Agustus",
+			"September",
+			"Oktober",
+			"November",
+			"Desember"
+		  );
+		  return $bln;
+	}
+}
 if (!function_exists('get_user_menu')) {
 	function get_user_menu($role_id)
 	{
@@ -44,13 +63,13 @@ if (!function_exists('get_user_menu')) {
 						'username' => 'Admin',
 						'title' => 'Add User',
 						'icon' => 'fas fa-user-plus',
-						'sub_menus' => [
-							[
-								'title' => '',
-								'url' => '',
-								'icon' => '',
-							],
-						],
+						// 'sub_menus' => [
+						// 	[
+						// 		'title' => '',
+						// 		'url' => '',
+						// 		'icon' => '',
+						// 	],
+						// ],
 					],
 				],
 			],
@@ -140,7 +159,7 @@ if (!function_exists('get_user_menu')) {
 						],
 					],
 					[
-
+						'username' => 'root',
 						'title' => 'Check Package',
 						'icon' => 'fas fa-copy',
 						'sub_menus' => [

@@ -57,11 +57,11 @@
               <i class="fas fa-user"></i>
             </a>
           </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-              <i class="fas fa-expand-arrows-alt"></i>
+          <li class="nav-item">
+            <a class="nav-link" data-widget="fullscreen" href="<?= base_url('form-csv') ?>" role="button">
+            <i class="fa-solid fa-file-csv"></i>
             </a>
-          </li> -->
+          </li>
           <!-- <li class="nav-item">
             <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
               <i class="fas fa-th-large"></i>
@@ -164,11 +164,14 @@
               <img src="<?= base_url('public/assets/dist/img/user2-160x160.jpg') ?>" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-              <?php foreach ($main_menu as $user) { ?>
+              <?php 
+              foreach ($main_menu as $user) { 
+                $user = $user['username'] ?? '';
+                ?>
+                <?php } ?>
                 <a href="#" class="d-block">
-                  <?= $user['username'] ?? '' ?>
+                  <?= $user ?? ''?>
                 </a>
-              <?php } ?>
             </div>
           </div>
           <nav class="mt-2">
@@ -183,21 +186,30 @@
                     </p>
                   </a>
                   <ul class="nav nav-treeview">
-                    <?php if ($menu['username'] == 'Admin') { ?>
+                    <?php if ($menu['username'] == 'Admin'): ?>
                       <li class="nav-item">
                         <a type="button" class="nav-link" data-toggle="modal" data-target="#profileModal">
                           <i class="far fa-circle nav-icon"></i>Tambah User
                         </a>
                       </li>
-                    <?php }  ?>
-                    <?php foreach ($menu['sub_menus'] as $sub_menu): ?>
-                      <li class="nav-item">
-                        <a href="<?= $sub_menu['url'] ?? '' ?>" class="nav-link">
-                          <i class="<?= $sub_menu['icon'] ?>"></i>
-                          <p><?= $sub_menu['title'] ?></p>
-                        </a>
-                      </li>
-                    <?php endforeach; ?>
+                    <?php else:  ?>
+                      
+                    <?php endif;  ?>
+                    <?php if (!empty($menu['sub_menus'])): ?>
+                      <?php foreach ($menu['sub_menus'] as $sub_menu): ?>
+                        <li class="nav-item">
+                          <a href="<?= $sub_menu['url'] ?? '#' ?>" class="nav-link">
+                            <i class="<?= $sub_menu['icon'] ?? 'far fa-circle nav-icon' ?>"></i>
+                            <p><?= $sub_menu['title'] ?? 'No Title' ?></p>
+                          </a>
+                        </li>
+                      <?php endforeach; ?>
+                    <?php else: ?>
+                      <!-- Jika sub_menus kosong -->
+                      <!-- <li class="nav-item">
+                        
+                      </li> -->
+                    <?php endif; ?>
                   </ul>
                 </li>
               <?php endforeach; ?>

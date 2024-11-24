@@ -18,7 +18,6 @@ class MainController extends CI_Controller
 		$this->load->model('User_model', 'sm');
 		$this->user_menu = get_user_menu($this->session->userdata('role_id'));
 		$this->username = $this->session->userdata('username');
-		
 	}
 	public function logout()
 	{
@@ -38,7 +37,7 @@ class MainController extends CI_Controller
 	}
 	public function index()
 	{
-		
+
 		$parse = array(
 			'title' => 'Pengiriman Barang',
 			'header' => 'Pengiriman barang',
@@ -49,7 +48,6 @@ class MainController extends CI_Controller
 			'role_id' => $this->session->userdata('role_id'),
 			'user_data' => $this->sm->user_profile($this->username)
 		);
-		// die_dump($parse);
 		$this->load->view('layouts/wrapper_top.php', $parse);
 		$this->load->view('layouts/sidebar.php', $parse);
 		$this->load->view('index', $parse);
@@ -61,9 +59,11 @@ class MainController extends CI_Controller
 		$parse = array(
 			'title' => 'Pengiriman Barang',
 			'header' => 'Pengiriman barang',
-			'main_menu' => 'Tambah Data',
+			'main_menu_' => 'Tambah Data',
 			'content' => 'Form Input Barang',
 			'main_menu' => $this->user_menu,
+			'role_id' => $this->session->userdata('role_id'),
+			'user_data' => $this->sm->user_profile($this->username)
 
 		);
 
@@ -101,10 +101,12 @@ class MainController extends CI_Controller
 		$parse = array(
 			'title' => 'Arrived Data',
 			'header' => 'Arrived Data',
-			'main_menu' => 'Tambah Data',
+			'main_menu_' => 'Tambah Data',
 			'content' => 'Tabel Arrived',
 			'csrf' => $this->csrf,
 			'main_menu' => $this->user_menu,
+			'role_id' => $this->session->userdata('role_id'),
+			'user_data' => $this->sm->user_profile($this->username),
 
 		);
 		$this->load->view('layouts/wrapper_top.php', $parse);
@@ -116,14 +118,92 @@ class MainController extends CI_Controller
 		$parse = array(
 			'title' => 'Received Data',
 			'header' => 'Received Data',
-			'main_menu' => 'Tambah Data',
+			'main_menu_' => 'Tambah Data',
 			'content' => 'Tabel Received',
 			'csrf' => $this->csrf,
 			'main_menu' => $this->user_menu,
+			'role_id' => $this->session->userdata('role_id'),
+			'user_data' => $this->sm->user_profile($this->username),
 
 		);
 		$this->load->view('layouts/wrapper_top.php', $parse);
 		$this->load->view('layouts/sidebar.php', $parse);
 		$this->load->view('received', $parse);
+	}
+	
+	public function form_csv()
+	{
+		$bln = get_name_month();
+		$parse = array(
+			'title' => 'Form CSV',
+			'header' => 'Form CSV',
+			'main_menu_' => 'Tambah Data',
+			'content' => 'Filter Data',
+			'csrf' => $this->csrf,
+			'bln' => $bln,
+			'main_menu' => $this->user_menu,
+			'role_id' => $this->session->userdata('role_id'),
+			'user_data' => $this->sm->user_profile($this->username),
+		);
+		// die_dump($parse);
+		$this->load->view('layouts/wrapper_top.php', $parse);
+		$this->load->view('layouts/sidebar.php', $parse);
+		$this->load->view('form_csv', $parse);
+	}
+	function view_data_csv()
+	{
+		$status = $this->input->post('statuses');
+		$statusArray = array_map('intval', explode(',', $status));
+		// die_dump([$status,$statusArray]);
+		$tgla = $this->input->post('tgla');
+		$blna = $this->input->post('blna');
+		$thna = $this->input->post('thna');
+		$tgli = $this->input->post('tgli');
+		$blni = $this->input->post('blni');
+		$thni = $this->input->post('thni');
+		$tgl_awal = date('Y-m-d', strtotime("$thna-$blna-$tgla"));
+		$tgl_akhir = date('Y-m-d', strtotime("$thni-$blni-$tgli"));
+		$data = $this->am->get_data_pengiriman_csv($statusArray, $tgl_awal, $tgl_akhir);
+		// $this->load->view('layouts/wrapper_top.php', $parse);
+		// $this->load->view('layouts/sidebar.php', $parse);
+		$this->load->view('tabel_csv', ['data' => $data]);
+	}
+	public function export_data_csv()
+	{
+		// Ambil data yang dikirim melalui AJAX
+		$data = json_decode($this->input->get('data'), true);
+
+		if (empty($data)) {
+			echo json_encode(['message' => 'No data to export']);
+			return;
+		}
+
+		// Tentukan nama file CSV
+		$filename = 'export_data_' . time() . '.csv';
+
+		// Header untuk file CSV
+		header('Content-Type: text/csv');
+		header('Content-Disposition: attachment; filename="' . $filename . '"');
+		header('Pragma: no-cache');
+		header('Expires: 0');
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+
+		// Mulai output CSV
+		echo '"No","Bill","Deskripsi","Tanggal Kirim","Tanggal Tiba","Status"' . PHP_EOL; // Header CSV
+
+		// Tulis data ke CSV
+		foreach ($data as $index => $row) {
+			// Menambahkan nomor urut di depan data
+			echo '"' . ($index + 1) . '",';
+			echo '"' . $row['bill'] . '",';
+			echo '"' . $row['deskripsi'] . '",';
+			echo '"' . $row['tgl_kirim'] . '",';
+			echo '"' . $row['tgl_tiba'] . '",';
+			echo '"' . $row['status'] . '"' . PHP_EOL;
+		}
+		log_message('info', 'Data received: ' . print_r($data, true));
+
+		// Akhiri script untuk menghentikan pengolahan lebih lanjut
+		exit;
 	}
 }

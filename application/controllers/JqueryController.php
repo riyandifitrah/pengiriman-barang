@@ -51,6 +51,93 @@ class JqueryController extends CI_Controller
 			echo json_encode(['status' => 'error', 'message' => 'Gagal menyimpan data.']);
 		}
 	}
+	function get_detail_user()
+	{
+		$start = $this->input->get('start');
+		$length = $this->input->get('length');
+		$order_column = $_GET['order'][0]['column'];
+		$order_dir = $_GET['order'][0]['dir'];
+		$search_value = $_GET['search']['value'];
+		$status_filter = $this->input->get('status');  // Dapatkan parameter status jika ada
+		$columns = ['username', 'role_id', 'login_notes', 'login_last', 'login_start'];
+		$this->db->from('m_user');
+		if (!empty($status_filter)) {
+			$this->db->where('status', $status_filter);  // Filter berdasarkan status
+		}
+		$total_data = $this->db->count_all_results();
+		$this->db->select('*');
+		$this->db->from('m_user');
+		$this->db->where_not_in('username', ['root']);
+		$this->db->where_not_in('role_id', [5]);
+
+		if (!empty($search_value)) {
+			$this->db->group_start();
+			$this->db->like('username', $search_value);
+			$this->db->or_like('role_id', $search_value);
+			$this->db->or_like('login_notes', $search_value);
+			$this->db->or_like('login_start', $search_value);
+			$this->db->or_like('login_last', $search_value);
+			$this->db->group_end();
+		}
+		if (isset($columns[$order_column])) {
+			$this->db->order_by($columns[$order_column], $order_dir);
+		}
+		if (!empty($status_filter)) {
+			$this->db->where('status', $status_filter);
+		}
+		$this->db->limit($length, $start);
+		$query = $this->db->get();
+		$data_user = $query->result();
+		$data = array();
+		$no = 0;
+		foreach ($data_user as $v) {
+			$btn_notes = '<div class="d-flex justify-content-center align-items-center">';
+			if ($v->login_notes == TRUE) {
+				$btn_notes .= '<span class="badge badge-success right">Online</span>';
+			} else {
+				$btn_notes .= '<span class="badge badge-danger right">Offline</span>';
+			}
+
+			$btn_notes .= '</div>';
+			$button = '<div class="d-flex justify-content-center align-items-center text-center">';
+			switch ($v->role_id) {
+				case 1:
+					$button .= '<div><button class="button-66" data-id="' . $v->id . '">Admin</button></div>';
+					break;
+				case 2:
+					$button .= '<div><button class="button-66" data-id="' . $v->id . '">Sender</button></div>';
+					break;
+				case 3:
+					$button .= '<div><button class="button-66" data-id="' . $v->id . '">Harbors</button></div>';
+					break;
+				case 4:
+					$button .= '<div><button class="button-66" data-id="' . $v->id . '">Receiver</button></div>';
+					break;
+				default:
+					$button = '';
+			}
+			$button .= '</div>';
+
+
+
+			$data[] = array(
+				'no' => ++$no,
+				'username' => $v->username,
+				'role_id' => $button,
+				'login_notes' => $btn_notes,
+				'login_last' => $v->login_last ? $v->login_last : '---------',
+				'login_start' => $v->login_start ? $v->login_start : '---------',
+				// 'action' => $button
+			);
+		}
+		echo json_encode(array(
+			"draw" => intval($this->input->get('draw')),
+			"recordsTotal" => $total_data,
+			"totalPengiriman" => $this->any_model->status_count(),
+			"recordsFiltered" => $this->db->affected_rows(),
+			"data" => $data
+		));
+	}
 
 	public function get_pengiriman()
 	{
@@ -131,8 +218,7 @@ class JqueryController extends CI_Controller
 					data-toggle="modal" data-target="#exampleModal" 
 					data-id="' . $v->id_barang . '">
 					<i class="fa-solid fa-eye"></i>
-					</a>';
-					;
+					</a>';;
 					break;
 				default:
 					$button .= '<a class="button-dataTable btn-color-2" id="btn-x" data-id="' . $v->id_barang . '">
